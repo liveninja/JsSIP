@@ -16016,7 +16016,12 @@ module.exports = function (_EventEmitter) {
         var _listener = void 0;
 
         connection.addEventListener('icecandidate', _listener = function listener(event) {
-          var candidate = event.candidate;
+          // const candidate = event.candidate; // TODO: make this a config option
+
+          // Dirty hack to force client to send immediately.
+          // A null candidate signals that ice gathering is done.
+          // Relies on Gateway to provide the candidate.
+          var candidate = null;
 
           if (!candidate) {
             connection.removeEventListener('icecandidate', _listener);
